@@ -176,7 +176,7 @@ function date2input(date: Date): string {
 
 export default defineComponent({
   data() {
-    const base = new ComputedDate({ fixed: { hours: 0, minutes: 0, seconds: 0, ms: 0 } }, new Date())
+    const base = new ComputedDate({ fixed: { time: 0 } }, new Date())
     return {
       base,
       inputDate: date2input(base),

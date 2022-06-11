@@ -27,6 +27,7 @@
 import { defineComponent } from 'vue'
 import ScheduleTable from './components/ScheduleTable.vue'
 import SettingTable, { Setting } from './components/SettingTable.vue'
+import { ComputedDate } from './ComputedDate'
 
 function load(): Setting[] {
   try {
@@ -42,7 +43,7 @@ function load(): Setting[] {
   // デフォルト
   return [
     {
-      title: '月～日',
+      title: '月曜～日曜',
       columns: [...Array(7)].map((_, i) => ({
         start: { fixed: { day: i + 1 } },
         end: { fixed: { day: i + 1 }, offset: { date: 1 } },
@@ -68,8 +69,24 @@ export default defineComponent({
           id: 'u1',
           name: 'u1',
           events: [
-            { id: 'e1', subject: 'e1', start: new Date(), end: new Date() },
-            { id: 'e2', subject: 'e2', start: new Date(), end: new Date() },
+            {
+              id: 'e1',
+              subject: 'e1',
+              start: new ComputedDate({ offset: { date: 2 }, fixed: { time: 0 } }, new Date()),
+              end: new ComputedDate({ offset: { date: 3 }, fixed: { time: 0 } }, new Date()),
+            },
+            {
+              id: 'e2',
+              subject: 'e2',
+              start: new ComputedDate({ offset: { date: 3 }, fixed: { time: 0 } }, new Date()),
+              end: new ComputedDate({ offset: { date: 4 }, fixed: { time: 0 } }, new Date()),
+            },
+            {
+              id: 'e3',
+              subject: 'e3',
+              start: new ComputedDate({ offset: { date: 3 }, fixed: { time: 0, hours: 10 } }, new Date()),
+              end: new ComputedDate({ offset: { date: 3 }, fixed: { time: 0, hours: 12 } }, new Date()),
+            },
           ],
         },
         { id: 'u2', name: 'u2' },
@@ -120,5 +137,8 @@ export default defineComponent({
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+tbody {
+  vertical-align: top;
 }
 </style>

@@ -9,7 +9,7 @@ type DateOptions = {
   day?: number
 }
 
-export type ComputedDateOptions = { fixed?: DateOptions; offset?: Omit<DateOptions, 'day'> }
+export type ComputedDateOptions = { fixed?: DateOptions & { time?: 0 }; offset?: Omit<DateOptions, 'day'> }
 export function isComputedDateOptions(v: any): v is ComputedDateOptions {
   if (typeof v !== 'object') return false
   if ('fixed' in v) return true
@@ -24,8 +24,9 @@ export class ComputedDate extends Date {
     if (options.offset) this.offset(options.offset)
   }
 
-  fix(options: DateOptions) {
-    const { year, month, date, hours, minutes, seconds, ms, day } = options
+  fix(options: DateOptions & { time?: 0 }) {
+    const { year, month, date, hours, minutes, seconds, ms, day, time } = options
+    if (time !== undefined) this.setHours(0, 0, 0, 0)
     if (year !== undefined) this.setFullYear(year)
     if (month !== undefined) this.setMonth(month)
     if (date !== undefined) this.setDate(date)

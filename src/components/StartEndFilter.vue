@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot :start="start" :end="end" :items="filtered">
-      <div v-for="item of items" style="border: 1px solid">
+      <div v-for="item of filtered" style="border: 1px solid">
         {{ item.subject }}
       </div>
     </slot>
@@ -25,7 +25,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   computed: {
     filtered() {
-      return this.items.filter((v) => this.start <= v.start && v.end < this.end)
+      return this.items.filter((v) => v.start < this.end && v.end > this.start)
     },
   },
 })

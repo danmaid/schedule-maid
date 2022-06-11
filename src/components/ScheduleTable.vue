@@ -46,7 +46,7 @@ export default defineComponent({
   },
   data() {
     return {
-      base: new ComputedDate({ fixed: { hours: 0, minutes: 0, seconds: 0, ms: 0 } }, new Date()),
+      base: new ComputedDate({ fixed: { time: 0 } }, new Date()),
     }
   },
   computed: {
